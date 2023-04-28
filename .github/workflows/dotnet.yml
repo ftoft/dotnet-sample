@@ -29,4 +29,11 @@ jobs:
     - name: Build
       run: dotnet build ${{ env.PROJECT_PATH }} -c Release
     - name: Test
-      run: dotnet test ${{ env.PROJECT_PATH }} -c Release --verbosity normal
+      run: dotnet test ${{ env.PROJECT_PATH }} -c Release --verbosity normal --logger "trx;logfilename=testResults.trx"
+      
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()
+      with:
+        files: |
+          **/TestResults/*.trx
