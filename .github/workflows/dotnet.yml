@@ -51,13 +51,13 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ secrets.TOKEN }}
         
     - name: Build and Push Docker Images
       if: ${{ success() }}
       uses: docker/build-push-action@v4
       with:
-        context: ${{ env.PROJECT_PATH }}  
+        context: .
         push: true
         tags: |
           ${{ github.repository_owner }}/dotnet-sample:latest
