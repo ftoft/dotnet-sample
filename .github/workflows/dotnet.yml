@@ -11,8 +11,8 @@ on:
   workflow_dispatch:
 
 env:
-  PROJECT_PATH: "src/"
-  DOCKERFILE: "./DotnetSamlpe.Docker/Dockerfile"
+  PROJECT_PATH: "./src"
+  DOCKERFILE: "./src/DotnetSamlpe.Docker/Dockerfile"
 
 permissions:
   checks: write
