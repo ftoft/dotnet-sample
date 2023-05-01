@@ -12,7 +12,7 @@ on:
 
 env:
   PROJECT_PATH: "src/"
-  DOCKERFILE: "Dockerfile"
+  DOCKERFILE: "DotnetSamlpe.Docker/Dockerfile"
 
 permissions:
   checks: write
@@ -57,7 +57,7 @@ jobs:
       if: ${{ success() }}
       uses: docker/build-push-action@v4
       with:
-        context: ${{ env.PROJECT_PATH }}
+        context: ${{ env.PROJECT_PATH }}  
         push: true
         tags: |
           ${{ github.repository_owner }}/dotnet-sample:latest
