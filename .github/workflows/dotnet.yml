@@ -12,7 +12,7 @@ on:
 
 env:
   PROJECT_PATH: "src/"
-  DOCKERFILE: "DotnetSamlpe.Docker/Dockerfile"
+  DOCKERFILE: "./DotnetSamlpe.Docker/Dockerfile"
 
 permissions:
   checks: write
