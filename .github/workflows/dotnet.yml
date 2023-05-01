@@ -12,6 +12,7 @@ on:
 
 env:
   PROJECT_PATH: "src/"
+  DOCKERFILE: "Dockerfile"
 
 permissions:
   checks: write
@@ -54,13 +55,10 @@ jobs:
         
     - name: Build and Push Docker Images
       if: ${{ success() }}
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v4
       with:
         context: ${{ env.PROJECT_PATH }}
         push: true
         tags: |
           ${{ env.IMAGE_NAME }}:latest
         file: ${{ env.DOCKERFILE }}
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
