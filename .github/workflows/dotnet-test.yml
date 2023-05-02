@@ -1,0 +1,33 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Dotnet Test and Publish Results
+
+inputs:
+  PROJECT_PATH:
+    description: 'The project path is where the solution file is located'
+    required: true
+
+jobs:
+  test-and-publish-results:
+    outputs:
+      tests-passed:
+        description: 'Whether the tests passed or failed'
+        value: ${{ success() && steps.test.outcome == 'success' }}
+        
+    steps:    
+    - name: Restore dependencies
+      run: dotnet restore ${{ inputs.PROJECT_PATH }}
+    
+    - name: Build Solution
+      run: dotnet build ${{ inputs.PROJECT_PATH }} -c Release
+    
+    - name: Test
+      run: dotnet test ${{ inputs.PROJECT_PATH }} -c Release --verbosity normal --logger "trx;logfilename=testResults.trx"
+      
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()
+      with:
+        files: |
+          **/TestResults/*.trx
