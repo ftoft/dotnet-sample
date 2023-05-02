@@ -57,7 +57,7 @@ jobs:
       if: ${{ success() }}
       uses: docker/build-push-action@v4
       with:
-        context: .
+        context: ${{ env.PROJECT_PATH }}
         push: true
         tags: |
           ${{ github.repository_owner }}/dotnet-sample:latest
