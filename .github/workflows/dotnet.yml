@@ -25,7 +25,7 @@ jobs:
         dotnet-version: 7.0.x
 
     - name: Run Test and Publish Results
-      uses: ./.github/workflows/dotnet-test.yaml
+      uses: ./.github/workflows/dotnet-test.yml
       with:
         PROJECT_PATH: "./src"
 
