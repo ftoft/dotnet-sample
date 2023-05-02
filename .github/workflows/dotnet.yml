@@ -30,7 +30,7 @@ jobs:
         PROJECT_PATH: "./src"
 
     - name: Build and Publish Docker Container
-      uses: path/to/dotnet-build-test-publish-docker.yml
+      uses: ./.github/workflows/dotnet-build-test-publish-docker.yml
       if: success()
       with:
         PROJECT_PATH: "./src"
