@@ -1,0 +1,9 @@
+﻿name: Say Hello
+
+description: 'Prints "Hello, world!" to the log'
+
+runs:
+  using: 'bash'
+  steps:
+    - name: Say Hello
+      run: echo "Hello, world!"

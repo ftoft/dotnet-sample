@@ -31,8 +31,11 @@ jobs:
         run: tree -a
 
       - name: Print out action
-        run: cat /home/runner/work/dotnet-sample/dotnet-sample/.github/actions/dotnet-test.yml
+        run: cat /home/runner/work/dotnet-sample/dotnet-sample/.github/actions/say-hello.yml
         
+      - name: Say Hello
+        uses: ./.github/actions/say-hello.yml
+      
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
