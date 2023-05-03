@@ -3,16 +3,21 @@
 
 name: Create and Publish Docker Container
 
-inputs:
-  PROJECT_PATH:
-    description: 'The project path is where the Solution file is located'
-    required: true
-  DOCKERFILE_PATH:
-    description: 'Path to the Dockerfile'
-    required: true
-  DOCKER_CONTAINER_NAME:
-    description: 'Docker Container Name'
-    required: true
+on:
+  workflow_call:
+    inputs:
+      PROJECT_PATH:
+        description: 'The project path is where the Solution file is located'
+        required: true
+        type: string
+      DOCKERFILE_PATH:
+        description: 'Path to the Dockerfile'
+        required: true
+        type: string
+      DOCKER_CONTAINER_NAME:
+        description: 'Docker Container Name'
+        required: true
+        type: string
 
 permissions:
   checks: write
@@ -20,6 +25,7 @@ permissions:
 
 jobs:
   create-and-publish-docker-container:
+    runs-on: ubuntu-latest
     steps:
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v2

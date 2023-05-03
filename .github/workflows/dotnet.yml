@@ -15,15 +15,15 @@ permissions:
   pull-requests: write
 
 jobs:
-  build:   
+  build-test:   
     uses: ftoft/shared-workflows/.github/workflows/dotnet-test.yml@main
     with:
       PROJECT_PATH: "./src"
 
-#      - name: Build and Publish Docker Container
-#        if: success()
-#        uses: ./.github/actions/dotnet-build-test-publish-docker.yml
-#        with:
-#          PROJECT_PATH: "./src"
-#          DOCKERFILE_PATH: "./src/DotnetSamlpe.Docker/Dockerfile"
-#          DOCKER_CONTAINER_NAME: "dotnet-sample"
+  build-docker-containers:
+    needs: build-test
+    uses: ftoft/shared-workflows/.github/workflows/dotnet-build-test-publish-docker.yml
+    with:
+      PROJECT_PATH: "./src"
+      DOCKERFILE_PATH: "./src/DotnetSamlpe.Docker/Dockerfile"
+      DOCKER_CONTAINER_NAME: "dotnet-sample"

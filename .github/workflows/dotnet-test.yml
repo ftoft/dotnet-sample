@@ -9,6 +9,7 @@ on:
       project_path:
         description: 'The project path is where the solution file is located'
         required: true
+        type: string
 
 jobs:
   test-and-publish-results:
