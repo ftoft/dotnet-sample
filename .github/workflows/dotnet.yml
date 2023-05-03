@@ -16,31 +16,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Print Current Directory
-        run: pwd
-        
-      - name: Install tree
-        run: sudo apt-get install tree
-          
-      - name: Print Recursive Directory Listing
-        run: tree -a
-
-      - name: Print out action
-        run: cat /home/runner/work/dotnet-sample/dotnet-sample/.github/actions/say-hello.yml
-        
-#      - name: Say Hello
-#        uses: ./.github/actions/say-hello.yml
-      
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 7.0.x
-        
+    steps:       
       - name: Run Test and Publish Results
         uses: ./.github/actions/workflows/dotnet-test.yml
         with:

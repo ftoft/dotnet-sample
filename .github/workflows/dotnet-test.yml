@@ -9,8 +9,17 @@ inputs:
     required: true
 
 jobs:
-  test-and-publish-results:        
-    steps:    
+  test-and-publish-results:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+        
     - name: Restore dependencies
       run: dotnet restore ${{ inputs.project_path }}
     
