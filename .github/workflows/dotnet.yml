@@ -28,13 +28,13 @@ jobs:
         run: pwd
         
       - name: Run Test and Publish Results
-        uses: ftoft/dotnet-sample/.github/actions/dotnet-test.yml@main
+        uses: ftoft/dotnet-sample/.github/actions/dotnet-test.yml
         with:
           PROJECT_PATH: "./src"
       
       - name: Build and Publish Docker Container
         if: success()
-        uses: ftoft/dotnet-sample/.github/actions/dotnet-build-test-publish-docker.yml@main
+        uses: ftoft/dotnet-sample/.github/actions/dotnet-build-test-publish-docker.yml
         with:
           PROJECT_PATH: "./src"
           DOCKERFILE_PATH: "./src/DotnetSamlpe.Docker/Dockerfile"
