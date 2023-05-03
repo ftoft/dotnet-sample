@@ -15,12 +15,10 @@ permissions:
   pull-requests: write
 
 jobs:
-  build:
-    steps:       
-      - name: Run Test and Publish Results
-        uses: ./.github/actions/workflows/dotnet-test.yml
-        with:
-          PROJECT_PATH: "./src"
+  build:   
+    uses: ./.github/actions/workflows/dotnet-test.yml
+    with:
+      PROJECT_PATH: "./src"
 
 #      - name: Build and Publish Docker Container
 #        if: success()
