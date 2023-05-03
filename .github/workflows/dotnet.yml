@@ -18,7 +18,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
       - uses: actions/checkout@v3
+
+      - name: Download reusable workflow
+        uses: actions/checkout@v3
+        with:
+          repository: ftoft/dotnet-sample
+          ref: main
+          path: .github/actions/
+      
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
@@ -28,13 +37,13 @@ jobs:
         run: pwd
         
       - name: Run Test and Publish Results
-        uses: ftoft/dotnet-sample/.github/actions/dotnet-test.yml
+        uses: ftoft/dotnet-sample/.github/actions/dotnet-test.yml@main
         with:
           PROJECT_PATH: "./src"
       
       - name: Build and Publish Docker Container
         if: success()
-        uses: ftoft/dotnet-sample/.github/actions/dotnet-build-test-publish-docker.yml
+        uses: ftoft/dotnet-sample/.github/actions/dotnet-build-test-publish-docker.yml@main
         with:
           PROJECT_PATH: "./src"
           DOCKERFILE_PATH: "./src/DotnetSamlpe.Docker/Dockerfile"
