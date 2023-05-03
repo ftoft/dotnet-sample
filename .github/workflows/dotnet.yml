@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Print Current Directory
         run: pwd
@@ -29,7 +29,10 @@ jobs:
           
       - name: Print Recursive Directory Listing
         run: tree -a
-      
+
+      - name: Print out action
+        run: cat /home/runner/work/dotnet-sample/dotnet-sample/.github/actions/dotnet-test.yml
+        
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
