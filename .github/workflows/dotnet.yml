@@ -15,12 +15,14 @@ permissions:
   pull-requests: write
 
 jobs:
-  build-test:   
+  build-test:
+    name: Build & Test Solution
     uses: ftoft/shared-workflows/.github/workflows/dotnet-test.yml@main
     with:
       PROJECT_PATH: "./src"
 
   build-docker-containers:
+    name: Build Docker Containers
     needs: build-test
     uses: ftoft/shared-workflows/.github/workflows/dotnet-build-test-publish-docker.yml@main
     with:
