@@ -27,6 +27,9 @@ jobs:
           repository: ftoft/dotnet-sample
           ref: main
           path: .github/actions/
+          
+      - name: Print Recursive Directory Listing
+        run: ls -R
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
