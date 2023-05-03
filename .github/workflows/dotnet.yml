@@ -27,3 +27,5 @@ jobs:
       PROJECT_PATH: "./src"
       DOCKERFILE_PATH: "./src/DotnetSamlpe.Docker/Dockerfile"
       DOCKER_CONTAINER_NAME: "dotnet-sample"
+    secrets:
+      token: ${{ secrets.token }}

@@ -18,6 +18,10 @@ on:
         description: 'Docker Container Name'
         required: true
         type: string
+    secrets:
+      token:
+        description: Github PAT token to perform login to Github Container Registry
+        required: true
 
 permissions:
   checks: write
@@ -32,7 +36,7 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
-        password: ${{ secrets.TOKEN }}
+        password: ${{ secrets.token }}
         
     - name: Build and Push Docker Images
       if: ${{ success() }}
