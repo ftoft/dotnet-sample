@@ -39,15 +39,3 @@ jobs:
       - name: Print Current Directory
         run: pwd
         
-      - name: Run Test and Publish Results
-        uses: ftoft/dotnet-sample/.github/actions/dotnet-test.yml@main
-        with:
-          PROJECT_PATH: "./src"
-      
-      - name: Build and Publish Docker Container
-        if: success()
-        uses: ftoft/dotnet-sample/.github/actions/dotnet-build-test-publish-docker.yml@main
-        with:
-          PROJECT_PATH: "./src"
-          DOCKERFILE_PATH: "./src/DotnetSamlpe.Docker/Dockerfile"
-          DOCKER_CONTAINER_NAME: "dotnet-sample"
