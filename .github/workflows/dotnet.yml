@@ -15,16 +15,8 @@ permissions:
   pull-requests: write
 
 jobs:
-  runs-on: ubuntu-latest
-  
-  checkout-code:
-    - name: Checkout code
-      uses: actions/checkout@v3
-  
-  call-hello-world:
-    uses: ./.github/actions/say-hello.yml
-  
   build:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -41,8 +33,8 @@ jobs:
       - name: Print out action
         run: cat /home/runner/work/dotnet-sample/dotnet-sample/.github/actions/say-hello.yml
         
-      - name: Say Hello
-        uses: ./.github/actions/say-hello.yml
+#      - name: Say Hello
+#        uses: ./.github/actions/say-hello.yml
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
@@ -54,10 +46,10 @@ jobs:
         with:
           PROJECT_PATH: "./src"
 
-      - name: Build and Publish Docker Container
-        if: success()
-        uses: ./.github/actions/dotnet-build-test-publish-docker.yml
-        with:
-          PROJECT_PATH: "./src"
-          DOCKERFILE_PATH: "./src/DotnetSamlpe.Docker/Dockerfile"
-          DOCKER_CONTAINER_NAME: "dotnet-sample"
+#      - name: Build and Publish Docker Container
+#        if: success()
+#        uses: ./.github/actions/dotnet-build-test-publish-docker.yml
+#        with:
+#          PROJECT_PATH: "./src"
+#          DOCKERFILE_PATH: "./src/DotnetSamlpe.Docker/Dockerfile"
+#          DOCKER_CONTAINER_NAME: "dotnet-sample"
