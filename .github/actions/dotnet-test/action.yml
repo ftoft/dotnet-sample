@@ -9,12 +9,7 @@ inputs:
     required: true
 
 jobs:
-  test-and-publish-results:
-    outputs:
-      tests-passed:
-        description: 'Whether the tests passed or failed'
-        value: ${{ steps.test.outcome == 'success' }}
-        
+  test-and-publish-results:        
     steps:    
     - name: Restore dependencies
       run: dotnet restore ${{ inputs.project_path }}
