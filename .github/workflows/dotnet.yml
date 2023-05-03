@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   build:   
-    uses: ftoft/shared-workflows/.github/actions/workflows/dotnet-test.yml@main
+    uses: ftoft/shared-workflows/.github/workflows/dotnet-test.yml@main
     with:
       PROJECT_PATH: "./src"
 
