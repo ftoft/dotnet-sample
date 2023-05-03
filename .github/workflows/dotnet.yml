@@ -22,7 +22,7 @@ jobs:
 
   build-docker-containers:
     needs: build-test
-    uses: ftoft/shared-workflows/.github/workflows/dotnet-build-test-publish-docker.yml
+    uses: ftoft/shared-workflows/.github/workflows/dotnet-build-test-publish-docker.yml@main
     with:
       PROJECT_PATH: "./src"
       DOCKERFILE_PATH: "./src/DotnetSamlpe.Docker/Dockerfile"
