@@ -33,13 +33,13 @@ jobs:
           dotnet-version: 7.0.x
         
       - name: Run Test and Publish Results
-        uses: .github/actions/dotnet-test.yml
+        uses: ./.github/actions/dotnet-test.yml
         with:
           PROJECT_PATH: "./src"
 
       - name: Build and Publish Docker Container
         if: success()
-        uses: .github/actions/dotnet-build-test-publish-docker.yml
+        uses: ./.github/actions/dotnet-build-test-publish-docker.yml
         with:
           PROJECT_PATH: "./src"
           DOCKERFILE_PATH: "./src/DotnetSamlpe.Docker/Dockerfile"
