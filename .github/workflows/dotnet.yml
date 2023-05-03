@@ -18,24 +18,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.0.x
-    
-    - name: Print Current Directory
-      run: pwd
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
       
-    - name: Run Test and Publish Results
-      uses: ftoft/dotnet-sample/.github/workflows/dotnet-test.yml@main
-      with:
-        PROJECT_PATH: "./src"
-
-    - name: Build and Publish Docker Container
-      uses: ftoft/dotnet-sample/.github/workflows/dotnet-build-test-publish-docker.yml@main
-      if: success()
-      with:
-        PROJECT_PATH: "./src"
-        DOCKERFILE_PATH: "./src/DotnetSamlpe.Docker/Dockerfile"
-        DOCKER_CONTAINER_NAME: "dotnet-sample"
+      - name: Print Current Directory
+        run: pwd
+        
+      - name: Run Test and Publish Results
+        uses: ftoft/dotnet-sample/.github/actions/dotnet-test.yml@main
+        with:
+          PROJECT_PATH: "./src"
+      
+      - name: Build and Publish Docker Container
+        if: success()
+        uses: ftoft/dotnet-sample/.github/actions/dotnet-build-test-publish-docker.yml@main
+        with:
+          PROJECT_PATH: "./src"
+          DOCKERFILE_PATH: "./src/DotnetSamlpe.Docker/Dockerfile"
+          DOCKER_CONTAINER_NAME: "dotnet-sample"
