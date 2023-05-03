@@ -42,7 +42,7 @@ jobs:
           dotnet-version: 7.0.x
         
       - name: Run Test and Publish Results
-        uses: ./.github/actions/dotnet-test.yml
+        uses: ./.github/actions/dotnet-test
         with:
           PROJECT_PATH: "./src"
 
