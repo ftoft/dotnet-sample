@@ -40,7 +40,14 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.token }}
-        
+
+    - name: Set short git commit SHA
+      id: vars
+      run: |
+        calculatedSha=$(git rev-parse --short ${{ github.sha }})
+        echo "short_sha=$calculatedSha" >> $GITHUB_OUTPUT
+        echo $calculatedSha
+
     - name: Build and Push Docker Images
       if: ${{ success() }}
       uses: docker/build-push-action@v4
@@ -50,3 +57,8 @@ jobs:
         tags: |
           ghcr.io/${{ github.repository_owner }}/${{ inputs.DOCKER_CONTAINER_NAME }}:latest
         file: ${{ inputs.DOCKERFILE_PATH }}
+        build-args: |
+          GIT_HASH=${{ steps.vars.outputs.short_sha }}
+          GIT_BRANCH=${{ github.ref_name }}
+    - name: Image digest
+      run: echo ${{ steps.docker_build.outputs.digest }}
