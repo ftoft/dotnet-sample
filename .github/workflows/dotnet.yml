@@ -15,8 +15,12 @@ permissions:
   pull-requests: write
 
 jobs:
+  runs-on: ubuntu-latest
+  
+  call-hello-world:
+    uses: ./.github/actions/say-hello.yml
+  
   build:
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
