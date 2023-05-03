@@ -13,7 +13,7 @@ jobs:
     outputs:
       tests-passed:
         description: 'Whether the tests passed or failed'
-        value: ${{ success() && steps.test.outcome == 'success' }}
+        value: ${{ steps.test.outcome == 'success' }}
         
     steps:    
     - name: Restore dependencies
