@@ -20,12 +20,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-          
+
       - name: Print Current Directory
         run: pwd
+        
+      - name: Install tree
+        run: sudo apt-get install tree
           
       - name: Print Recursive Directory Listing
-        run: ls -aR
+        run: tree -a
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
