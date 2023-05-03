@@ -3,10 +3,12 @@
 
 name: Dotnet Test and Publish Results
 
-inputs:
-  project_path:
-    description: 'The project path is where the solution file is located'
-    required: true
+on:
+  workflow_call:
+    inputs:
+      project_path:
+        description: 'The project path is where the solution file is located'
+        required: true
 
 jobs:
   test-and-publish-results:
