@@ -33,7 +33,7 @@ jobs:
         include:
           - dockerfile: ./src/DotnetSamlpe.Docker/Dockerfile
             image_name: dotnet-sample
-          - dockerfile: ./src/DotnetSamlpe.Awesome/Dockerfile
+          - dockerfile: ./src/DotnetSample.DockerAwesome/Dockerfile
             image_name: dotnet-sample-awesome
     
     uses: ftoft/shared-workflows/.github/workflows/dotnet-build-test-publish-docker.yml@main
