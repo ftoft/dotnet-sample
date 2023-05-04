@@ -29,8 +29,8 @@ jobs:
     name: Build & Test Solution
     uses: ftoft/shared-workflows/.github/workflows/dotnet-test.yml@main
     with:
-      dotnet-version: 7.0.x
       project_path: ./src
+      dotnet-version: 7.0.x
 
   build-docker-containers:
     name: Build Docker Containers
