@@ -1,0 +1,30 @@
+﻿name: Delete Docker Containers
+
+on:
+  delete:
+    branches:
+      - 'feature/*'
+      - 'hotfix/*'
+
+jobs:
+  delete-docker-containers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get branch name
+        run: echo "::set-env name=BRANCH_NAME::${GITHUB_REF#refs/heads/}"
+        shell: bash
+
+      - name: List Docker images with matching tag
+        id: list-images
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/*
+          filter: ${{ env.BRANCH_NAME }}
+
+      - name: Delete Docker images
+        if: steps.list-images.outputs.labels
+        uses: docker/delete-image-action@v2
+        with:
+          name: ${{ steps.list-images.outputs.labels }}
+          registry: ghcr.io
+          token: ${{ secrets.GITHUB_TOKEN }}
