@@ -64,8 +64,8 @@ public class CalculatorServiceTests
     }
     
     [Fact]
-    public void False_is_true()
+    public void False_is_false()
     {
-        Assert.Equal(true, false == true);
+        Assert.True(false == false);
     }
 }
