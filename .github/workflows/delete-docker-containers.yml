@@ -14,17 +14,20 @@ jobs:
         run: echo "::set-env name=BRANCH_NAME::${GITHUB_REF#refs/heads/}"
         shell: bash
 
-      - name: List Docker images with matching tag
-        id: list-images
-        uses: docker/metadata-action@v4
+      - name: List package versions
+        id: list-packages
+        uses: gr2m/get-all-package-versions-action@v1.x
         with:
-          images: ghcr.io/${{ github.repository_owner }}/*
-          filter: ${{ env.BRANCH_NAME }}
-
-      - name: Delete Docker images
-        if: steps.list-images.outputs.labels
-        uses: docker/delete-image-action@v2
-        with:
-          name: ${{ steps.list-images.outputs.labels }}
           registry: ghcr.io
+          package: '${{ github.repository_owner }}/${{ github.repository_name }}'
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Delete Docker packages
+        if: steps.list-packages.outputs.versions
+        run: |
+          for tag in ${{ steps.list-packages.outputs.versions }}; do
+            curl -X DELETE \
+              -H "Accept: application/vnd.github.package-deletes-preview+json" \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              "https://api.github.com/repos/${{ github.repository }}/packages/container/${{ github.repository_owner }}/${{ github.repository_name }}:${tag}"
+          done
