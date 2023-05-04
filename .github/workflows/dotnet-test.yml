@@ -10,6 +10,10 @@ on:
         description: 'The project path is where the solution file is located'
         required: true
         type: string
+      dotnet-version:
+        description: "The Dotnet version to use"
+        required: true
+        type: string
 
 jobs:
   test-and-publish-results:
@@ -21,7 +25,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: ${{ inputs.dotnet-version }}
         
     - name: Restore dependencies
       run: dotnet restore ${{ inputs.project_path }}

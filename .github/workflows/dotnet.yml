@@ -19,6 +19,8 @@ on:
   workflow_dispatch:
 
 permissions:
+  contents: read
+  issues: read
   checks: write
   pull-requests: write
 
@@ -27,7 +29,8 @@ jobs:
     name: Build & Test Solution
     uses: ftoft/shared-workflows/.github/workflows/dotnet-test.yml@main
     with:
-      PROJECT_PATH: "./src"
+      dotnet-version: 7.0.x
+      project_path: ./src
 
   build-docker-containers:
     name: Build Docker Containers
@@ -45,8 +48,8 @@ jobs:
     
     uses: ftoft/shared-workflows/.github/workflows/dotnet-build-test-publish-docker.yml@main
     with:
-      PROJECT_PATH: "./src"
-      DOCKERFILE_PATH: ${{ matrix.dockerfile }}
-      DOCKER_CONTAINER_NAME: ${{ matrix.image_name }}
+      project_path: ./src
+      dockerfile_path: ${{ matrix.dockerfile }}
+      docker_image_name: ${{ matrix.image_name }}
     secrets:
       token: ${{ secrets.token }}
