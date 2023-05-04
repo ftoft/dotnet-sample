@@ -29,6 +29,7 @@ permissions:
 
 jobs:
   create-and-publish-docker-container:
+    name: Create & Publish { inputs.docker_image_name }
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
