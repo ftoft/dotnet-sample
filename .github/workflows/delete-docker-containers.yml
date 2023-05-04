@@ -5,6 +5,7 @@ on:
     branches:
       - 'feature/*'
       - 'hotfix/*'
+  workflow_dispatch:
 
 jobs:
   delete-docker-containers:
@@ -14,20 +15,25 @@ jobs:
         run: echo "::set-env name=BRANCH_NAME::${GITHUB_REF#refs/heads/}"
         shell: bash
 
-      - name: List package versions
+      - name: List all packages
         id: list-packages
-        uses: gr2m/get-all-package-versions-action@v1.x
-        with:
-          registry: ghcr.io
-          package: '${{ github.repository_owner }}/${{ github.repository_name }}'
-          token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl \
+            -H "Accept: application/vnd.github.package-preview+json" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/packages/container/${{ github.repository_owner }}/${{ github.repository_name }}/versions" \
+            > packages.json
+          echo "::set-output name=packages::$(cat packages.json)"
 
       - name: Delete Docker packages
-        if: steps.list-packages.outputs.versions
+        if: steps.list-packages.outputs.packages
         run: |
-          for tag in ${{ steps.list-packages.outputs.versions }}; do
-            curl -X DELETE \
-              -H "Accept: application/vnd.github.package-deletes-preview+json" \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              "https://api.github.com/repos/${{ github.repository }}/packages/container/${{ github.repository_owner }}/${{ github.repository_name }}:${tag}"
+          for pkg in ${{ steps.list-packages.outputs.packages }}; do
+            if echo "$pkg" | jq -e ".metadata.container.tags | index(\"${{ env.BRANCH_NAME }}\")" > /dev/null; then
+              package_id=$(echo "$pkg" | jq -r ".id")
+              curl -X DELETE \
+                -H "Accept: application/vnd.github.package-deletes-preview+json" \
+                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                "https://api.github.com/repos/${{ github.repository }}/packages/container/${{ github.repository_owner }}/${{ github.repository_name }}/versions/$package_id"
+            fi
           done
