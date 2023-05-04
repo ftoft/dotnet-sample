@@ -14,20 +14,32 @@ permissions:
   checks: write
   pull-requests: write
 
+env:
+  PROJECT_PATH: "./src"
+
+strategy:
+  matrix:
+    fail-fast: true
+    include:
+      - dockerfile: ./src/DotnetSamlpe.Docker/Dockerfile
+        image_name: dotnet-sample
+      - dockerfile: ./src/DotnetSamlpe.Awesome/Dockerfile
+        image_name: dotnet-sample-awesome
+
 jobs:
   build-test:
     name: Build & Test Solution
     uses: ftoft/shared-workflows/.github/workflows/dotnet-test.yml@main
     with:
-      PROJECT_PATH: "./src"
+      PROJECT_PATH: ${{ env.PROJECT_PATH }}
 
   build-docker-containers:
     name: Build Docker Containers
     needs: build-test
     uses: ftoft/shared-workflows/.github/workflows/dotnet-build-test-publish-docker.yml@main
     with:
-      PROJECT_PATH: "./src"
-      DOCKERFILE_PATH: "./src/DotnetSamlpe.Docker/Dockerfile"
-      DOCKER_CONTAINER_NAME: "dotnet-sample"
+      PROJECT_PATH: ${{ env.PROJECT_PATH }}
+      DOCKERFILE_PATH: ${{ matrix.dockerfile }}
+      DOCKER_CONTAINER_NAME: ${{ matrix.image_name }}
     secrets:
       token: ${{ secrets.token }}
