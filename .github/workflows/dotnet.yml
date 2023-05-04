@@ -14,8 +14,6 @@ permissions:
   checks: write
   pull-requests: write
 
-
-
 jobs:
   build-test:
     name: Build & Test Solution
@@ -31,10 +29,11 @@ jobs:
       fail-fast: true
       matrix:
         include:
-          - dockerfile: ./src/DotnetSamlpe.Docker/Dockerfile
-            image_name: dotnet-sample
-          - dockerfile: ./src/DotnetSample.DockerAwesome/Dockerfile
-            image_name: dotnet-sample-awesome
+          - image_name: dotnet-sample
+            dockerfile: ./src/DotnetSamlpe.Docker/Dockerfile
+          - image_name: dotnet-sample-awesome
+            dockerfile: ./src/DotnetSample.DockerAwesome/Dockerfile
+          
     
     uses: ftoft/shared-workflows/.github/workflows/dotnet-build-test-publish-docker.yml@main
     with:
