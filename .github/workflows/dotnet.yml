@@ -18,8 +18,8 @@ env:
   PROJECT_PATH: "./src"
 
 strategy:
+  fail-fast: true
   matrix:
-    fail-fast: true
     include:
       - dockerfile: ./src/DotnetSamlpe.Docker/Dockerfile
         image_name: dotnet-sample
