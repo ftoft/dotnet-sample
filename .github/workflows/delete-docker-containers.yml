@@ -11,10 +11,6 @@ jobs:
   delete-docker-containers:
     runs-on: ubuntu-latest
     steps:
-      - name: Get branch name
-        run: echo "::set-env name=BRANCH_NAME::${GITHUB_REF#refs/heads/}"
-        shell: bash
-
       - name: List all packages
         id: list-packages
         run: |
@@ -29,7 +25,7 @@ jobs:
         if: steps.list-packages.outputs.packages
         run: |
           for pkg in ${{ steps.list-packages.outputs.packages }}; do
-            if echo "$pkg" | jq -e ".metadata.container.tags | index(\"${{ env.BRANCH_NAME }}\")" > /dev/null; then
+            if echo "$pkg" | jq -e ".metadata.container.tags | index(\"${{ github.ref_name }}\")" > /dev/null; then
               package_id=$(echo "$pkg" | jq -r ".id")
               curl -X DELETE \
                 -H "Accept: application/vnd.github.package-deletes-preview+json" \
