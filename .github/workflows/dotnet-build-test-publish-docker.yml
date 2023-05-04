@@ -34,7 +34,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
       
-    - name: Set short git commit SHA
+    - name: Short git SHA
       id: vars
       run: |
         calculatedSha=$(git rev-parse --short ${{ github.sha }})
@@ -68,6 +68,7 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         file: ${{ inputs.DOCKERFILE_PATH }}
+        labels: ${{ steps.meta.outputs.labels }}
         build-args: |
           GIT_HASH=${{ steps.vars.outputs.short_sha }}
           GIT_BRANCH=${{ github.ref_name }}
