@@ -62,4 +62,10 @@ public class CalculatorServiceTests
         // Assert
         Assert.Equal(0, _sut.Result());
     }
+    
+    [Fact]
+    public void False_is_true()
+    {
+        Assert.Equal(true, false == true);
+    }
 }
